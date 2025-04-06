@@ -1,0 +1,48 @@
+name: Build coopnet
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build-macos-arm:
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Install dependencies
+              run: |
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                brew install make gcc
+
+            - name: Build coopnet
+              run: |
+                gmake OSX_BUILD=1 -j$(sysctl -n hw.ncpu)
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: coopnet-macos-arm
+                path: ./bin/libcoopnet.dylib
+
+  build-macos-intel:
+        runs-on: macos-13
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Install dependencies
+              run: |
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                brew install make gcc
+
+            - name: Build coopnet
+              run: |
+                gmake OSX_BUILD=1 -j$(sysctl -n hw.ncpu)
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: coopnet-macos-intel
+                path: ./bin/libcoopnet.dylib

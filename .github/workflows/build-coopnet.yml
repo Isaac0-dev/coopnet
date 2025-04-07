@@ -13,7 +13,7 @@ jobs:
 
             - name: Build coopnet
               run: |
-                gmake OSX_BUILD=1 -j$(sysctl -n hw.ncpu)
+                make OSX_BUILD=1 -j$(sysctl -n hw.ncpu)
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
@@ -29,7 +29,7 @@ jobs:
 
             - name: Build coopnet
               run: |
-                gmake OSX_BUILD=1 -j$(sysctl -n hw.ncpu)
+                make OSX_BUILD=1 -j$(sysctl -n hw.ncpu)
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4

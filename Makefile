@@ -39,8 +39,10 @@ else ifeq ($(OSX_BUILD),1)
   # macOS defines sprintf as unsafe, and refuses to compile further, so add this flag to ignore it
   CXXFLAGS += -DOSX_BUILD=1 -Wno-error=deprecated-declarations
   ifeq ($(shell arch),arm64)
+    CXXFLAGS += -mmacosx-version-min=11
     LIB_DIR := lib/mac-arm
   else
+    CXXFLAGS += -mmacosx-version-min=10.15
     LIB_DIR := lib/mac-intel
   endif
   DYNLIB_NAME := libcoopnet.dylib
